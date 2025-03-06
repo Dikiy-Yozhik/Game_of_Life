@@ -1,11 +1,12 @@
 #pragma once
-#include <iostream>
+#include <SFML/Graphics.hpp>
 #include "field.h"
 
-using namespace std;
-
-class View
-{
+class View {
 public:
-    void Print_World(Field& map);
+    void CreateWindow(int width, int height);
+    void DrawWorld(sf::RenderWindow& window, Field& map);
+    sf::RenderWindow& GetWindow() { return window; }
+private:
+    sf::RenderWindow window;
 };
