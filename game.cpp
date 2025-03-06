@@ -2,6 +2,8 @@
 #include "view.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <windows.h> // Подключаем WinAPI
+#undef CreateWindow // Отключаем макрос CreateWindow из WinAPI
 
 int main() {
     int width, height;
@@ -28,8 +30,17 @@ int main() {
         }
     }
 
+    int windowWidth = 800;
+    int windowHeight = 600;
+
     View view;
-    view.CreateWindow(width * 15, height * 15 + 50); // Увеличение размера окна
+    view.CreateWindow(windowWidth, windowHeight);
+
+    // Получаем HWND окна SFML
+    HWND hwnd = view.GetWindow().getSystemHandle();
+
+    // Устанавливаем окно поверх всех других окон
+    SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 
     int generation = 0;
     bool gameOver = false;
@@ -42,9 +53,7 @@ int main() {
         }
 
         if (!gameOver) {
-            view.GetWindow().clear();
             view.DrawWorld(view.GetWindow(), *game_logic.Get_Field());
-            view.GetWindow().display();
 
             State_Game state = game_logic.Update();
             if (state == State_Game::GameOver || state == State_Game::Stable) {
@@ -59,10 +68,7 @@ int main() {
             generation++;
             sf::sleep(sf::milliseconds(100)); // Задержка между кадрами
         } else {
-            view.GetWindow().clear();
             view.DrawWorld(view.GetWindow(), *game_logic.Get_Field());
-            view.GetWindow().display();
-
             sf::sleep(sf::milliseconds(100)); // Маленькая задержка для обновления экрана
         }
     }

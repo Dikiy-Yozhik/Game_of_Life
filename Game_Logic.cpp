@@ -35,7 +35,7 @@ Game_Logic::Game_Logic(int rows, int cols) {
     srand(time(NULL));
     _field = new Field(rows, cols);
     _previous_field = new Field(*_field);
-    Rand_location();
+    //Rand_location();
 }
 
 Game_Logic::Game_Logic(int rows, int cols, std::vector<Point> start_location) {
