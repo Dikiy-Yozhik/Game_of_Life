@@ -9,7 +9,8 @@ enum State_Cell
 enum State_Game
 {
     Run,
-    GameOver
+    GameOver,
+    Stable
 };
 
 struct Point

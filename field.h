@@ -15,6 +15,7 @@ public:
     Field();
     Field(int rows, int cols);
     ~Field();
+    Field(const Field& other);
 
     int Get_rows();
     int Get_cols();
